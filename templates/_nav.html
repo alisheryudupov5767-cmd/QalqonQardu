@@ -1,0 +1,21 @@
+{% set p = request.path %}
+<nav class="nav">
+<a href="/qalqon" class="{{ 'on' if p=='/qalqon' }}"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10H3z"/></svg>Bosh</a>
+<a href="/qalqon/post" class="{{ 'on' if p=='/qalqon/post' }}"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12h12m-4-5 5 5-5 5M20 4v16"/></svg>Post</a>
+<a href="/qalqon/hudud" class="{{ 'on' if p=='/qalqon/hudud' }}"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Hudud</a>
+<a href="/"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v18h-6M10 17l5-5-5-5M15 12H3"/></svg>Chiqish</a>
+</nav>
+<button class="sosbtn" id="sos" aria-label="SOS: 2 soniya bosib turing">SOS</button>
+<div id="sosmsg" class="hidden fixed inset-x-4 top-24 z-40 card p-4 text-center font-bold"></div>
+<script>
+(function(){const b=document.getElementById('sos'),m=document.getElementById('sosmsg');let t;
+function show(x,c){m.textContent=x;m.style.color=c;m.classList.remove('hidden');setTimeout(()=>m.classList.add('hidden'),4000)}
+async function send(){let name=localStorage.getItem('qname')||prompt('Ismingiz va familiyangiz:')||"Noma'lum";
+try{localStorage.setItem('qname',name)}catch(e){}
+const go=async(lat,lng)=>{try{await fetch('/api/sos',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({member:name,lat,lng})});
+show('SOS signali TXTB ga yuborildi. Yordam yo\'lda.','#1b8a4b');navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){show('Signal yuborilmadi. Aloqani tekshiring.','#d62828')}};
+navigator.geolocation?navigator.geolocation.getCurrentPosition(p=>go(p.coords.latitude,p.coords.longitude),()=>go(null,null),{timeout:5000,enableHighAccuracy:true}):go(null,null)}
+const down=e=>{e.preventDefault();show('SOS: 2 soniya bosib turing...','#d62828');t=setTimeout(send,2000)},up=()=>clearTimeout(t);
+b.addEventListener('touchstart',down);b.addEventListener('mousedown',down);['touchend','touchcancel','mouseup','mouseleave'].forEach(k=>b.addEventListener(k,up));
+document.querySelectorAll('input[name=member]').forEach(i=>{i.value=localStorage.getItem('qname')||'';i.addEventListener('change',()=>localStorage.setItem('qname',i.value))})})();
+</script>

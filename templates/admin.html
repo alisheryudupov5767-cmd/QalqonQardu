@@ -1,0 +1,35 @@
+{% extends "base.html" %}{% block hdr %}<a href="{{ url_for('admin_logout') }}" class="ml-auto text-sm underline">Chiqish</a>{% endblock %}
+{% block body %}
+<div id="alert" class="hidden sticky top-[62px] z-30 p-3" style="background:var(--red);color:#fff"></div>
+<main class="p-4 max-w-5xl mx-auto">
+<h1 class="text-xl font-bold mb-3">TXTB boshqaruv paneli</h1>
+{% for m in get_flashed_messages() %}<div class="card p-3 mb-3" style="color:var(--green)">{{ m }}</div>{% endfor %}
+<section class="card p-4 mb-4"><b>Topshiriq yuborish</b>
+<form method="post" action="{{ url_for('admin_task') }}" class="grid gap-3 mt-3">
+<textarea name="text" rows="2" placeholder="Qalqon xodimlariga buyruq yoki vazifa" required></textarea>
+<label class="flex gap-2 items-center !text-base"><input type="checkbox" name="urgent" class="!w-5 !h-5"> Shoshilinch</label>
+<button class="btn">Yuborish</button></form></section>
+<section class="card p-4 mb-4"><b>Filtr va hisobot</b>
+<form id="f" class="grid grid-cols-2 gap-3 mt-3">
+<div class="col-span-2"><input name="q" placeholder="Ism yoki guruh bo'yicha qidirish"></div>
+<div><select name="faculty"><option value="">Barcha fakultetlar</option>{% for f in faculties %}<option>{{ f }}</option>{% endfor %}</select></div>
+<div><select name="kind"><option value="">Barcha bo'limlar</option><option value="post">Post</option><option value="hudud">Hudud</option></select></div>
+<div class="col-span-2"><select name="violation_type"><option value="">Barcha qoidabuzarliklar</option><option>Qonun bo'yicha</option><option>Universitet odob-axloq kodeksi bo'yicha</option></select></div>
+<div><label>Sanadan</label><input type="date" name="date_from"></div><div><label>Sanagacha</label><input type="date" name="date_to"></div>
+<a id="word" class="btn col-span-2" href="#">Word (jadval) yuklab olish</a>
+<a id="exp" class="btn2 col-span-2 text-center" href="#">Excel uchun CSV</a></form></section>
+<h2 class="font-bold mb-2">Onlayn monitoring</h2><div id="t">{% include "_table.html" %}</div></main>
+<script>
+const f=document.getElementById('f'),al=document.getElementById('alert');let seen=0,ctx;
+async function load(){const p=new URLSearchParams(new FormData(f)).toString();document.getElementById('exp').href='/admin/export?'+p;document.getElementById('word').href='/admin/export.docx?'+p;
+const r=await fetch('/admin/table?'+p);if(r.ok)document.getElementById('t').innerHTML=await r.text();}
+function beep(){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();o.type='square';o.frequency.value=880;o.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.6)}catch(e){}navigator.vibrate&&navigator.vibrate([400,150,400])}
+async function sos(){const r=await fetch('/admin/sos.json');if(!r.ok)return;const d=(await r.json()).items;
+if(!d.length){al.classList.add('hidden');seen=0;return}
+if(d[0].id>seen){seen=d[0].id;beep()}
+al.classList.remove('hidden');al.innerHTML=d.map(s=>`<div class="flex items-center gap-2 py-1"><b class="flex-1">SOS: ${s.member} · ${s.created_at.slice(11)}${s.lat?` · <a class="underline" target="_blank" href="https://maps.google.com/?q=${s.lat},${s.lng}">Xaritada ochish</a>`:' · joylashuv yo\'q'}</b><button class="px-3 py-1 rounded bg-white text-red-700 font-bold" data-i="${s.id}">Qabul qildim</button></div>`).join('')}
+al.addEventListener('click',async e=>{const i=e.target.dataset.i;if(i){await fetch('/admin/sos/'+i+'/ack',{method:'POST'});sos()}});
+f.addEventListener('input',load);f.addEventListener('submit',e=>e.preventDefault());
+document.body.addEventListener('click',()=>{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)()},{once:true});
+setInterval(load,10000);setInterval(sos,4000);load();sos();
+</script>{% endblock %}

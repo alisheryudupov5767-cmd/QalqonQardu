@@ -1,0 +1,10 @@
+<div class="grid gap-3 md:grid-cols-2">{% for r in rows %}
+<article class="card p-4" {% if r.kind=='hudud' %}style="border-left:5px solid var(--red)"{% endif %}>
+<div class="flex justify-between text-xs" style="color:var(--mute)"><span>{{ 'Hudud' if r.kind=='hudud' else 'Post' }} · {{ r.member }}</span><span>{{ r.created_at }}</span></div>
+<b class="block mt-1">{{ r.last_name }} {{ r.first_name }} {{ r.father_name or '' }}</b>
+<div class="text-sm">{{ r.faculty }}, {{ r.course }}-kurs, {{ r.group_name }}{% if r.ttj %} · TTJ: {{ r.ttj }}{% endif %}</div>
+{% if r.violation_type %}<div class="text-sm mt-1" style="color:var(--red)">{{ r.person_type }}: {{ r.violation_type }}</div>{% endif %}
+{% if r.evidence_note or r.note %}<p class="text-sm mt-1" style="color:var(--mute)">{{ r.evidence_note or r.note }}</p>{% endif %}
+<div class="mt-2 flex gap-3 text-sm">{% if r.doc_photo %}<a class="underline" style="color:var(--blue)" target="_blank" href="/uploads/{{ r.doc_photo }}">Ma'lumotnoma</a>{% endif %}
+{% if r.evidence_photo %}<a class="underline" style="color:var(--blue)" target="_blank" href="/uploads/{{ r.evidence_photo }}">Dalil</a>{% endif %}</div></article>
+{% else %}<p class="text-sm" style="color:var(--mute)">Hozircha yozuv yo'q.</p>{% endfor %}</div>

@@ -1,0 +1,30 @@
+<!doctype html><html lang="uz"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#072a5e"><title>{% block title %}Qalqon{% endblock %}</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{--navy:#072a5e;--blue:#0a4aa6;--bg:#f1f4f9;--line:#d9e1ee;--text:#14213d;--mute:#5d6b85;--red:#d62828;--green:#1b8a4b}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans',sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+.top{background:var(--navy);color:#fff;padding:.8rem 1rem;padding-top:calc(.8rem + env(safe-area-inset-top));position:sticky;top:0;z-index:20}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px}
+.btn{background:var(--blue);color:#fff;font-weight:700;padding:.95rem 1.2rem;border-radius:12px;display:block;text-align:center;width:100%}
+.btn:active{background:var(--navy)}.btn2{border:1.5px solid var(--blue);color:var(--blue);padding:.7rem 1rem;border-radius:12px;display:inline-block;font-weight:500}
+input,select,textarea{background:#fff;border:1.5px solid var(--line);color:var(--text);padding:.8rem .9rem;border-radius:12px;width:100%;font-size:16px}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);outline:none}
+label{font-size:.82rem;color:var(--mute);display:block;margin:0 0 .3rem .1rem}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom);z-index:20}
+.nav a{padding:.6rem 0;text-align:center;font-size:.72rem;color:var(--mute)}.nav a.on{color:var(--blue);font-weight:700}
+.nav svg{margin:0 auto .15rem;width:22px;height:22px}
+.ico{width:46px;height:46px;border-radius:12px;background:#e6eefb;color:var(--blue);display:flex;align-items:center;justify-content:center;flex:none}
+.sosbtn{position:fixed;right:14px;bottom:calc(88px + env(safe-area-inset-bottom));z-index:30;width:68px;height:68px;border-radius:50%;background:var(--red);color:#fff;font-weight:700;font-size:1.1rem;box-shadow:0 6px 18px rgba(214,40,40,.45);border:3px solid #fff}
+.logo{height:44px;width:44px;border-radius:50%;object-fit:contain;image-rendering:-webkit-optimize-contrast;flex:none}
+.bgimg{position:relative;min-height:calc(100vh - 62px);isolation:isolate}
+.bgimg::before{content:"";position:fixed;inset:0;z-index:-1;background:url(/static/bg_logo.png) center 38%/min(78vw,560px) no-repeat,radial-gradient(circle at 50% 30%,#0f4aa8,#072a5e 55%,#041a3d)}
+.bgimg::after{content:"";position:fixed;inset:0;z-index:-1;background:rgba(4,20,50,.35)}
+</style></head><body>
+<header class="top flex items-center gap-3">
+<img src="/static/logo.png" alt="Logo" class="h-10 w-auto" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><svg style="display:none" width="34" height="38" viewBox="0 0 34 38"><path d="M17 2 3 7v11c0 9 6 15 14 18 8-3 14-9 14-18V7z" fill="#fff"/><path d="M17 8 8 11v7c0 6 4 10 9 12 5-2 9-6 9-12v-7z" fill="#0a4aa6"/></svg>
+<div class="leading-tight"><div class="font-bold text-lg">Qalqon</div><div class="text-xs opacity-80">Qarshi davlat universiteti</div></div>
+{% block hdr %}{% endblock %}</header>
+{% block body %}{% endblock %}</body></html>

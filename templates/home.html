@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block body %}
+<div class="bgimg"><main class="p-4 max-w-xl mx-auto pt-8">
+<img src="/static/logo.png" alt="Qalqon" class="mx-auto mb-5" style="width:min(62vw,240px);height:auto;border-radius:50%;box-shadow:0 8px 30px rgba(0,0,0,.45)">
+<section class="rounded-2xl p-5 text-white mb-5" style="background:linear-gradient(135deg,#072a5e,#0a4aa6)">
+<h1 class="text-2xl font-bold">Xush kelibsiz</h1>
+<p class="opacity-90 mt-1 text-sm">Universitetda tartib-intizom va xavfsizlikni nazorat qilish tizimi</p></section>
+<h2 class="font-bold mb-3">Kirish turini tanlang</h2>
+<a href="{{ url_for('qalqon') }}" class="card p-4 flex gap-4 items-center mb-3">
+<span class="ico"><svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5z"/></svg></span>
+<span><b class="block">Qalqon a'zosi</b><span class="text-sm" style="color:var(--mute)">Post, hudud va SOS signali</span></span></a>
+<a href="{{ url_for('admin_login') }}" class="card p-4 flex gap-4 items-center">
+<span class="ico"><svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 22h8M12 18v4"/></svg></span>
+<span><b class="block">TXTB xodimi</b><span class="text-sm" style="color:var(--mute)">Monitoring, topshiriq va hisobot</span></span></a>
+</main></div>{% endblock %}

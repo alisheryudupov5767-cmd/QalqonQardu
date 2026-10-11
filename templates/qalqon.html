@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block body %}
+<main class="p-4 max-w-xl mx-auto">
+<h1 class="text-xl font-bold mb-3">Qalqon a'zosi</h1>
+<a href="{{ url_for('form',kind='post') }}" class="card p-4 flex gap-4 items-center mb-3"><span class="ico">&#8646;</span>
+<span><b class="block">Kirish / Chiqish</b><span class="text-sm" style="color:var(--mute)">Post va nazorat bo'limi</span></span></a>
+<a href="{{ url_for('form',kind='hudud') }}" class="card p-4 flex gap-4 items-center mb-5"><span class="ico">&#9873;</span>
+<span><b class="block">Hudud</b><span class="text-sm" style="color:var(--mute)">Patrul va huquqbuzarlik</span></span></a>
+<h2 class="font-bold mb-2">TXTB topshiriqlari</h2>
+{% for t in tasks %}<div class="card p-3 mb-2" {% if t.urgent %}style="border-left:5px solid var(--red)"{% endif %}>
+{% if t.urgent %}<b style="color:var(--red)">Shoshilinch. </b>{% endif %}{{ t.text }}<div class="text-xs mt-1" style="color:var(--mute)">{{ t.created_at }}</div></div>
+{% else %}<p class="text-sm" style="color:var(--mute)">Hozircha yangi topshiriq yo'q.</p>{% endfor %}
+</main>{% include "_nav.html" %}{% endblock %}

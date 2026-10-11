@@ -1,0 +1,23 @@
+{% extends "base.html" %}{% block body %}
+<main class="p-4 max-w-xl mx-auto">
+<h1 class="text-xl font-bold mb-3">{{ "Kirish / Chiqish" if kind=='post' else "Hudud: huquqbuzarlik" }}</h1>
+{% for m in get_flashed_messages() %}<div class="card p-3 mb-3" style="border-color:var(--green);color:var(--green)">{{ m }}</div>{% endfor %}
+<form method="post" enctype="multipart/form-data" class="grid gap-3">
+<div class="card p-4 grid gap-3"><b>Xodim</b><div><label>Ism-familiyangiz</label><input name="member" required></div></div>
+<div class="card p-4 grid gap-3"><b>Talaba ma'lumoti</b>
+<div><label>Familiyasi</label><input name="last_name" required></div>
+<div><label>Ismi</label><input name="first_name" required></div>
+<div><label>Otasining ismi</label><input name="father_name"></div>
+<div><label>Fakulteti</label><select name="faculty">{% for f in faculties %}<option>{{ f }}</option>{% endfor %}</select></div>
+<div class="grid grid-cols-2 gap-3"><div><label>Kursi</label><select name="course">{% for i in range(1,6) %}<option>{{ i }}</option>{% endfor %}</select></div>
+<div><label>Guruhi</label><input name="group_name"></div></div>
+<div><label>TTJ (yotoqxona)</label><input name="ttj"></div>
+<div><label>Mas'ul tyutor</label><input name="tutor"></div>
+<div><label>Izoh</label><textarea name="note" rows="2"></textarea></div>
+<div><label>Ma'lumotnoma (kamera yoki fayl)</label><input type="file" name="doc_photo" accept="image/*" capture="environment"></div></div>
+{% if kind=='hudud' %}<div class="card p-4 grid gap-3"><b>Huquqbuzarlik</b>
+<div><label>Shaxs turi</label><select name="person_type"><option>Talaba</option><option>Tashqi fuqaro</option></select></div>
+<div><label>Qoidabuzarlik turi</label><select name="violation_type"><option>Qonun bo'yicha</option><option>Universitet odob-axloq kodeksi bo'yicha</option></select></div>
+<div><label>Dalil (rasm)</label><input type="file" name="evidence_photo" accept="image/*" capture="environment"></div>
+<div><label>Dalil bo'yicha izoh</label><textarea name="evidence_note" rows="3"></textarea></div></div>{% endif %}
+<button class="btn">Saqlash va yuborish</button></form></main>{% include "_nav.html" %}{% endblock %}

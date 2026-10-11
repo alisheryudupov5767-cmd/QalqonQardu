@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block body %}
+<div class="bgimg"><main class="p-4 max-w-sm mx-auto pt-10"><form method="post" class="card p-5 grid gap-4">
+<h1 class="text-xl font-bold">TXTB xodimi kirishi</h1>
+{% for m in get_flashed_messages() %}<p style="color:var(--red)">{{ m }}</p>{% endfor %}
+<div><label>Login</label><input name="login" required autofocus></div>
+<div><label>Parol</label><input type="password" name="password" required></div>
+<button class="btn">Kirish</button><a href="/" class="text-center text-sm" style="color:var(--mute)">Bosh sahifaga qaytish</a></form></main></div>{% endblock %}
